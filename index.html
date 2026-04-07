@@ -924,9 +924,9 @@
 
                     <!-- Comparison Chart -->
                     <div class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-left">
-                        <h3 class="font-extrabold text-slate-800 text-lg mb-2 text-center">Your Journey vs Worst Possible Decisions</h3>
+                        <h3 class="font-extrabold text-slate-800 text-lg mb-2 text-center">Your Journey vs Decisions with lowest Returns</h3>
                         <p class="text-xs text-slate-500 text-center mb-4">
-                            <span class="font-semibold text-red-500">Worst Decisions</span> assumes:
+                            <span class="font-semibold text-red-500">Lowest Returns</span> assumes:
                             Stage 1 → Fund A (2% simple interest) &bull;
                             Stage 2 → Annual compounding (3.0%) &bull;
                             Stage 3 → Safe fund (2.5% p.a.)
@@ -1427,7 +1427,7 @@
             const legendRows = [
                 { color: '#22c55e', label: `Your Journey (Run ${state.previousRuns.length + 1})`, dashed: false },
                 ...state.previousRuns.map((run, i) => ({ color: prevRunColors[i], label: `Run ${run.label.replace('Run ', '')}: ${run.fundName}`, dashed: true })),
-                { color: '#ef4444', label: 'Worst Decisions', dashed: false },
+                { color: '#ef4444', label: 'Lowest Returns', dashed: false },
             ];
             ctx.font = '11px Inter, sans-serif'; ctx.textAlign = 'left';
             legendRows.forEach((row, i) => {
