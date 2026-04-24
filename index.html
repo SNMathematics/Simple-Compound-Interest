@@ -67,6 +67,8 @@
 
         // --- UTILS ---
         const formatMoney = (amount) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+        const formatMoney4dp = (amount) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(amount);
+        const fmtNum4dp = (amount) => new Intl.NumberFormat('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(amount);
         const FORMULA_LATEX = 'A = P\\left(1 + \\dfrac{r}{100}\\right)^{n}';
         const tex = (latex, display = false) => {
             if (typeof katex === 'undefined') return `<span class="font-mono font-bold">${latex.replace(/\\/g,'')}</span>`;
@@ -263,7 +265,7 @@
                     <div class="mb-8 overflow-x-auto bg-white rounded-2xl shadow-sm border border-slate-200 w-full custom-scrollbar">
                         <div class="bg-purple-50 px-6 py-4 border-b border-purple-100 flex justify-between items-center">
                             <h3 class="font-extrabold text-purple-900 text-lg">2026 – 2030 Growth (Fund C)</h3>
-                            <span class="text-xs font-bold text-purple-700 uppercase tracking-wider">Formula: ${tex(FORMULA_LATEX)}</span>
+                            <span class="text-xs font-bold text-purple-700 uppercase tracking-wider">Formula: <span class="normal-case">${tex(FORMULA_LATEX)}</span></span>
                         </div>
                         <table class="w-full text-left border-collapse min-w-[800px]">
                             <thead class="bg-slate-50 text-slate-600 border-b border-slate-200">
@@ -271,7 +273,7 @@
                                     <th class="px-4 py-3 text-xs font-bold uppercase text-center w-16">Year</th>
                                     <th class="px-4 py-3 text-xs font-bold uppercase whitespace-nowrap">Start Balance</th>
                                     <th class="px-4 py-3 text-xs font-bold uppercase">Step-by-Step Working</th>
-                                    <th class="px-4 py-3 text-xs font-bold uppercase text-purple-700">Direct Formula (n = years)</th>
+                                    <th class="px-4 py-3 text-xs font-bold uppercase text-purple-700">Direct Formula (<span class="normal-case">n</span> = years)</th>
                                     <th class="px-4 py-3 text-xs font-bold uppercase text-right whitespace-nowrap">End Balance</th>
                                 </tr>
                             </thead>
@@ -323,7 +325,7 @@
                     <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-3 inline-block">The Frequency Test</span>
                     <h2 class="text-3xl font-bold mb-2">Stage 2: 2031 – 2032 (2 Years)</h2>
                     <p class="text-slate-600 text-lg max-w-2xl mx-auto">
-                        You are investing your <strong class="text-green-600 bg-green-50 px-2 py-1 rounded">${formatMoney(p)}</strong> for the next 2 years.
+                        You are investing your <strong class="text-green-600 bg-green-50 px-2 py-1 rounded">${formatMoney4dp(p)}</strong> <span class="text-sm text-slate-500">(rounded to ${formatMoney(p)})</span> for the next 2 years.
                         Calculate the final balance for <strong>each</strong> fund, then compare which earns more.
                     </p>
                 </div>
@@ -345,7 +347,7 @@
                         ${state.showStage2Hints ? `
                             <div class="w-full mb-4 bg-indigo-50 p-4 rounded-xl border border-indigo-100 text-sm text-left">
                                 <p class="font-bold text-indigo-800 mb-2">Formula values:</p>
-                                <p class="font-mono text-indigo-700">P = ${formatMoney(p)}</p>
+                                <p class="font-mono text-indigo-700">P = ${formatMoney4dp(p)}</p>
                                 <p class="font-mono text-indigo-700">r = 3</p>
                                 <p class="font-mono text-indigo-700">n = 2</p>
                             </div>
@@ -380,7 +382,7 @@
                         ${state.showStage2Hints ? `
                             <div class="w-full mb-4 bg-teal-50 p-4 rounded-xl border border-teal-100 text-sm text-left">
                                 <p class="font-bold text-teal-800 mb-2">Formula values:</p>
-                                <p class="font-mono text-teal-700">P = ${formatMoney(p)}</p>
+                                <p class="font-mono text-teal-700">P = ${formatMoney4dp(p)}</p>
                                 <p class="font-mono text-teal-700">r = 2.96 ÷ 12</p>
                                 <p class="font-mono text-teal-700">n = 24</p>
                             </div>
@@ -460,7 +462,7 @@
                     ` : `
                         <ul class="text-slate-600 space-y-3 mb-8 font-mono bg-indigo-50 p-6 rounded-xl border border-indigo-100 text-sm">
                             <li class="text-indigo-800 font-bold mb-1 font-sans">Formula Values:</li>
-                            <li><strong>P (Principal):</strong> ${formatMoney(state.currentBalance)}</li>
+                            <li><strong>P (Principal):</strong> ${formatMoney4dp(state.currentBalance)}</li>
                             <li><strong>r (Rate per compounding period, in %):</strong> 2.96 &divide; 12</li>
                             <li><strong>n (Total compounding periods):</strong> 2 years &times; 12 = 24 months</li>
                         </ul>
@@ -515,7 +517,7 @@
                                         <th class="px-4 py-3 text-xs font-bold uppercase text-center w-24">Period</th>
                                         <th class="px-4 py-3 text-xs font-bold uppercase whitespace-nowrap">Start Balance</th>
                                         <th class="px-4 py-3 text-xs font-bold uppercase">Step-by-Step Working</th>
-                                        <th class="px-4 py-3 text-xs font-bold uppercase text-teal-700">Direct Formula (n = months)</th>
+                                        <th class="px-4 py-3 text-xs font-bold uppercase text-teal-700">Direct Formula (<span class="normal-case">n</span> = months)</th>
                                         <th class="px-4 py-3 text-xs font-bold uppercase text-right whitespace-nowrap">End Balance</th>
                                     </tr>
                                 </thead>
@@ -592,7 +594,7 @@
                     </p>
                     <div class="bg-white p-6 rounded-xl border border-orange-200 mb-6">
                         <div class="flex justify-between items-center mb-4 border-b border-orange-100 pb-4">
-                            <p class="text-slate-600 font-semibold">Your Current Balance: <span class="text-xl text-slate-800">${formatMoney(state.currentBalance)}</span></p>
+                            <p class="text-slate-600 font-semibold">Your Current Balance: <span class="text-xl text-slate-800">${formatMoney4dp(state.currentBalance)}</span> <span class="text-xs text-slate-400">(rounded to ${formatMoney(state.currentBalance)})</span></p>
                             <p class="text-slate-500 font-semibold text-sm bg-orange-50 px-3 py-1 rounded border border-orange-100 italic">Please round your answers to exactly 2 decimal places.</p>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
@@ -601,8 +603,7 @@
                                 <label class="block text-sm font-bold text-green-700 mb-2" style="min-height:2.75rem;display:flex;align-items:flex-end;">Scenario A: Calculate balance after 1 SUCCESS (+20%)</label>
                                 ${state.analyzerSStatus === 'correct' ? `
                                     <div class="flex items-center bg-green-50 border border-green-400 rounded-lg p-2">
-                                        <span class="text-slate-500 font-bold mr-2">$</span>
-                                        <span class="font-bold text-green-800">${state.analyzerCorrectS ? state.analyzerCorrectS.toFixed(2) : ''}</span>
+                                        <span class="font-bold text-green-800">${state.analyzerCorrectS ? formatMoney(state.analyzerCorrectS) : ''}</span>
                                     </div>
                                 ` : `
                                     <div class="flex items-center">
@@ -619,8 +620,7 @@
                                 <label class="block text-sm font-bold text-red-700 mb-2" style="min-height:2.75rem;display:flex;align-items:flex-end;">Scenario B: Calculate balance after 1 PENALTY (-20%)</label>
                                 ${state.analyzerDStatus === 'correct' ? `
                                     <div class="flex items-center bg-green-50 border border-green-400 rounded-lg p-2">
-                                        <span class="text-slate-500 font-bold mr-2">$</span>
-                                        <span class="font-bold text-green-800">${state.analyzerCorrectD ? state.analyzerCorrectD.toFixed(2) : ''}</span>
+                                        <span class="font-bold text-green-800">${state.analyzerCorrectD ? formatMoney(state.analyzerCorrectD) : ''}</span>
                                     </div>
                                 ` : `
                                     <div class="flex items-center">
@@ -660,7 +660,7 @@
                     <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-bold tracking-wide uppercase mb-3 inline-block">The Risk Test</span>
                     <h2 class="text-3xl font-bold mb-2">Stage 3: 2033 – 2035 (3 Years)</h2>
                     <p class="text-slate-600 text-lg max-w-3xl mx-auto">
-                        You have <strong class="text-green-600 bg-green-50 px-2 py-1 rounded">${formatMoney(state.currentBalance)}</strong>. Choose your final fund!<br>
+                        You have <strong class="text-green-600 bg-green-50 px-2 py-1 rounded">${formatMoney4dp(state.currentBalance)}</strong> <span class="text-sm text-slate-500">(rounded to ${formatMoney(state.currentBalance)})</span>. Choose your final fund!<br>
                         Funds B and C have higher potential, but carry risk. If the market drops, you lose out on interest AND take a <strong class="text-red-600 bg-red-50 px-2 py-0.5 rounded">penalty loss that year</strong> on your money.
                     </p>
                 </div>
@@ -753,7 +753,7 @@
                         ${tex(FORMULA_LATEX, true)}
                     </div>
                     <ul class="text-slate-600 space-y-3 mb-8 font-mono bg-blue-50 p-6 rounded-xl border border-blue-100 text-sm">
-                        <li><strong>P (Principal):</strong> ${formatMoney(state.currentBalance)}</li>
+                        <li><strong>P (Principal):</strong> ${formatMoney4dp(state.currentBalance)}</li>
                         <li><strong>r (Annual Rate, in %):</strong> 2.5</li>
                         <li><strong>n (Years):</strong> 3 (2033 to 2035)</li>
                     </ul>
@@ -807,7 +807,8 @@
                         <div class="flex-1 w-full max-w-lg flex flex-col items-center md:items-start">
                             <div class="bg-slate-50 w-full p-5 rounded-xl border border-slate-200 mb-6">
                                 <p class="text-sm text-slate-500 mb-1">Current Balance</p>
-                                <h3 class="text-3xl font-bold text-slate-800">${formatMoney(state.wheelData.bal)}</h3>
+                                <h3 class="text-3xl font-bold text-slate-800">${formatMoney4dp(state.wheelData.bal)}</h3>
+                                <p class="text-xs text-slate-400 mt-1">rounded to ${formatMoney(state.wheelData.bal)}</p>
                             </div>
 
                             ${!isFinished ? `
@@ -1058,8 +1059,8 @@
                 let startBal = bal;
                 let t = y - 2025;
                 let interest = bal * 0.05;
-                let stepWorking = `Step: ${formatMoney(startBal)} &times; 5.0% = +${formatMoney(interest)}`;
-                let formulaStr = `${formatMoney(state.initialBalance)} &times; (1 + 5/100)<sup>${t}</sup>`;
+                let stepWorking = `Step: ${tex(`\\text{\\$${fmtNum4dp(startBal)}} \\times 5.0\\% = +\\text{\\$${fmtNum4dp(interest)}}`)}`;
+                let formulaStr = tex(`\\text{\\$${fmtNum4dp(state.initialBalance)}} \\times \\left(1 + \\frac{5}{100}\\right)^{${t}}`);
                 bal += interest;
                 logs.push({ year: y, startBalance: startBal, working: stepWorking, formulaWorking: formulaStr, endBalance: bal });
             }
@@ -1098,9 +1099,9 @@
                 aStatus = 'incorrect';
                 const wrongAnnualMonthly = Math.round(p * Math.pow(1 + 0.03/12, 2) * 100) / 100;
                 if (Math.abs(annualVal - wrongAnnualMonthly) <= 0.01) {
-                    aMsg = 'For Annual compounding, r = 3 and n = 2. You do not divide r by 12 — that is only for monthly.';
+                    aMsg = `For Annual compounding, ${tex('r = 3')} and ${tex('n = 2')}. You do not divide ${tex('r')} by 12 — that is only for monthly.`;
                 } else {
-                    aMsg = 'Incorrect. Use A = P(1 + r/100)^n with r = 3 and n = 2.';
+                    aMsg = `Incorrect. Use ${tex(FORMULA_LATEX)} with ${tex('r = 3')} and ${tex('n = 2')}.`;
                 }
             }
 
@@ -1115,11 +1116,11 @@
                 const wrongR24 = Math.round(p * Math.pow(1.0296, 24) * 100) / 100;
                 const wrongR2  = Math.round(p * Math.pow(1.0296, 2) * 100) / 100;
                 if (Math.abs(monthlyVal - wrongN2) <= 0.01) {
-                    mMsg = 'Check n. For monthly compounding over 2 years, n = 2 × 12 = 24 months, not 2.';
+                    mMsg = `Check ${tex('n')}. For monthly compounding over 2 years, ${tex('n = 2 \\times 12 = 24')} months, not 2.`;
                 } else if (Math.abs(monthlyVal - wrongR24) <= 0.02 || Math.abs(monthlyVal - wrongR2) <= 0.02) {
-                    mMsg = 'Check r. For monthly compounding, r = 2.96 ÷ 12 (monthly rate %). You must divide the annual rate by 12.';
+                    mMsg = `Check ${tex('r')}. For monthly compounding,<br>${tex('r = 2.96 \\div 12')} (monthly rate %). You must divide the annual rate by 12.`;
                 } else {
-                    mMsg = 'Incorrect. Use A = P(1 + r/100)^n with r = 2.96 ÷ 12 and n = 24.';
+                    mMsg = `Incorrect. Use ${tex(FORMULA_LATEX)} with<br>${tex('r = 2.96 \\div 12')} and ${tex('n = 24')}.`;
                 }
             }
 
@@ -1137,14 +1138,14 @@
                     for (let m = 1; m <= 12; m++) {
                         let startBal = bal;
                         let interest = bal * (0.0296 / 12);
-                        let stepWorking = `${formatMoney(bal)} &times; (2.96% &divide; 12) = +${formatMoney(interest)}`;
-                        let formulaStr = `${formatMoney(p)} &times; (1 + 2.96/100 &divide; 12)<sup>${periodCount}</sup>`;
+                        let stepWorking = tex(`\\text{\\$${fmtNum4dp(bal)}} \\times (2.96\\% \\div 12) = +\\text{\\$${fmtNum4dp(interest)}}`);
+                        let formulaStr = tex(`\\text{\\$${fmtNum4dp(p)}} \\times \\left(1 + \\frac{2.96 \\div 12}{100}\\right)^{${periodCount}}`);
                         bal += interest;
                         logs.push({ period: `${y} M${m}`, startBalance: startBal, working: stepWorking, formulaWorking: formulaStr, endBalance: bal });
                         periodCount++;
                     }
                 }
-                state.stage2Working = `${formatMoney(p)} &times; (1 + 2.96/100 &divide; 12)<sup>24</sup>`;
+                state.stage2Working = tex(`\\text{\\$${fmtNum4dp(p)}} \\times \\left(1 + \\frac{2.96 \\div 12}{100}\\right)^{24}`);
                 state.pendingStage2Logs = logs;
                 state.pendingStage2Bal = bal;
             }
@@ -1218,7 +1219,7 @@
                 for (let y = 2033; y <= 2035; y++) {
                     let startBal = bal;
                     let interest = bal * 0.025;
-                    let workingStr = `Compound: ${formatMoney(bal)} &times; 2.5% = +${formatMoney(interest)}`;
+                    let workingStr = `Compound: ${tex(`\\text{\\$${fmtNum4dp(bal)}} \\times 2.5\\% = +\\text{\\$${fmtNum4dp(interest)}}`)}`;
                     bal += interest;
                     logs.push({ year: y, success: true, startBalance: startBal, interestEarned: interest, penalty: 0, endBalance: bal, working: workingStr });
                 }
@@ -1298,11 +1299,11 @@
             let workingStr = "";
             if (success) {
                 let interest = bal * interestRate;
-                workingStr = `Compound: ${formatMoney(bal)} &times; ${(interestRate * 100).toFixed(1)}% = +${formatMoney(interest)}`;
+                workingStr = `Compound: ${tex(`\\text{\\$${fmtNum4dp(bal)}} \\times ${(interestRate * 100).toFixed(1)}\\% = +\\text{\\$${fmtNum4dp(interest)}}`)}`;
                 bal += interest;
             } else {
                 let penalty = bal * penaltyRate;
-                workingStr = `Penalty: ${formatMoney(bal)} &times; ${(penaltyRate * 100).toFixed(1)}% = -${formatMoney(penalty)}`;
+                workingStr = `Penalty: ${tex(`\\text{\\$${fmtNum4dp(bal)}} \\times ${(penaltyRate * 100).toFixed(1)}\\% = -\\text{\\$${fmtNum4dp(penalty)}}`)}`;
                 bal -= penalty;
             }
             state.stage3Logs.push({ year, success, startBalance: startBal, endBalance: bal, working: workingStr });
