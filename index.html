@@ -1244,7 +1244,7 @@
             if (state.wheelData.isSpinning) return;
             state.wheelData.isSpinning = true; render();
             const riskPct = state.wheelData.riskPct;
-            const success = Math.random() > (riskPct / 100);
+            const success = state.alwaysSucceed ? true : Math.random() > (riskPct / 100);
             let validSliceIndices = [];
             state.wheelData.slicePattern.forEach((type, idx) => {
                 if (success && type.startsWith('green')) validSliceIndices.push(idx);
@@ -1489,6 +1489,14 @@
                 console.log('skip(): no calculation to fill on current view "' + v + '"'
                     + (v === 'stage3_wheel' ? ' (spin the wheel first)' : ''));
             }
+        };
+
+        // --- DEV WHEEL HACK ---
+        window.hack = (enable = true) => {
+            state.alwaysSucceed = !!enable;
+            console.log(state.alwaysSucceed
+                ? 'Wheel rigged: every spin will land on a SUCCESS slice. Call hack(false) to disable.'
+                : 'Wheel hack disabled. Spins are random again.');
         };
 
         // --- INITIALIZE ---
